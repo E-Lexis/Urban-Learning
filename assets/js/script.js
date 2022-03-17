@@ -1,3 +1,4 @@
+
 //declare variables 
 //array named history - get local storage function will set this variable
 //string named searchInput - for search input, set to empty string
@@ -34,3 +35,29 @@
 //add event to view history button
 //call getLocal storage function
 //this event callback function will loop through history array and build out html for each word that has been searched in the past.
+
+
+//Capture the boring 
+var boringWord = function(word){
+    word = "fetch"
+    var captureBoringUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+
+    fetch(captureBoringUrl).then(function(response){
+        if(response.ok){
+            response.json().then(function(data){
+                displayBoringWord(data);
+            });
+        }
+        else {
+            alert("That is not a word in our dictionary");
+        }
+    });
+
+};
+
+var displayBoringWord = function(word){
+    console.log(word);
+}
+
+boringWord();
+
