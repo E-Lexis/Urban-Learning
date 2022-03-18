@@ -68,10 +68,11 @@ var displayBoringWord = function(word){
     searchedWord.appendChild(wordWord);
 
     //Display Definitions
-    var wordDefinition = document.createElement("li");
     
+    //Identify how many word meanins are in the array
     var meaningLength = word[0].meanings.length;
     for(var i = 0; i < meaningLength; i++){
+        var wordDefinition = document.createElement("li");
         wordDefinition.textContent = word[0].meanings[i].definitions[0].definition;
         definitions.appendChild(wordDefinition);
     }
