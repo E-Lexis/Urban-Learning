@@ -69,13 +69,17 @@ var displayBoringWord = function(word){
 
     //Display Definitions
     
-    //Identify how many word meanins are in the array
+    //Identify how many word meaning are in the array
     var meaningLength = word[0].meanings.length;
     for(var i = 0; i < meaningLength; i++){
-        var wordDefinition = document.createElement("li");
-        wordDefinition.textContent = word[0].meanings[i].definitions[0].definition;
-        definitions.appendChild(wordDefinition);
+        var definitionLength = word[0].meanings[i].definitions.length;
+        for(var j = 0; j < definitionLength; j++){
+            var wordDefinition = document.createElement("li");
+            wordDefinition.textContent = word[0].meanings[i].definitions[j].definition;
+            definitions.appendChild(wordDefinition);
+        }
     }
+    
 
 
     //wordDefinition.textContent = word[0].meanings[0].definitions[0].definition;
