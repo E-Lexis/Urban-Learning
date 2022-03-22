@@ -40,9 +40,11 @@ var results = document.querySelector("#results");
 var searchedWord = document.querySelector("#searchedWord");
 var defined = document.querySelector("#defined");
 var definitions = document.querySelector("#definitions");
+var part = document.querySelector("#part");
+var audio = document.querySelector("#audio");
 
 var boringWord = function(word){
-    word = "fetch"
+    word = "salty"
     var captureBoringUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
 
     fetch(captureBoringUrl).then(function(response){
@@ -69,9 +71,13 @@ var displayBoringWord = function(word){
 
     //Display Definitions
     
-    //Identify how many word meaning are in the array
+    //Identify how many word meanings are in the array
     var meaningLength = word[0].meanings.length;
     for(var i = 0; i < meaningLength; i++){
+        var partOfSpeech = document.createElement("div");
+        partOfSpeech.textContent = word[0].meanings[i].partOfSpeech;
+        part.appendChild(partOfSpeech);
+                
         var definitionLength = word[0].meanings[i].definitions.length;
         for(var j = 0; j < definitionLength; j++){
             var wordDefinition = document.createElement("li");
@@ -80,11 +86,18 @@ var displayBoringWord = function(word){
         }
     }
     
+    //var playAudio = function(){
+       //var wordAudio = word[0].phonetics[0].audio;
+        //wordAudio.playAudio();
+        //var wordButton=document.createElement("button");
 
+        //wordButton = wordAudio;
+    //}
 
-    //wordDefinition.textContent = word[0].meanings[0].definitions[0].definition;
-    //defined.appendChild (wordDefinition);
+    
+
 
 }
 
+//audio.addEventListener("click",playAudio());
 boringWord();
