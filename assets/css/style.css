@@ -1,0 +1,7 @@
+.def-card {
+    height: 300px
+}
+
+.def-row {
+    justify-content: space-evenly;
+}

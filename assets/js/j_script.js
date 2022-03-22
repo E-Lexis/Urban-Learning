@@ -15,9 +15,39 @@
 //JSON parse the local storage item array
 //set history array declared above to this parsed array from local storage
 
-//function getUrban(input){}
-//create a function that takes in searchInput and fetches urban dictionary search word
-//this function will set the html card for urban dictionary to the return from fetch
+
+
+
+
+function getUrban(searchInput) {
+
+    var testURl = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" + searchInput;
+
+    const settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": testURl,
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-key":
+                "b7288dc5b6mshce15b452215a7dap154bc7jsna49c7ed6d646",
+            "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com"
+        }
+    };
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        //this function will set the html card for urban dictionary 
+        if (response) {
+            console.log("apiUrban", response.list);
+            document.getElementById("urban-word").innerText = "Word: " + response.list[0].word;
+            document.getElementById("urban-def").innerText = "Top Definition: " + response.list[0].definition;
+            document.getElementById("urban-def2").innerText = "Alternative Definition: " + response.list[1].definition;
+
+        }
+    })
+
+};
 
 //function getTraditional(input){}
 //create a function that takes in searchInput and fetches traditional dictionary search word
@@ -30,6 +60,12 @@
 //call set local storage function and pass history array to it
 //call function that fetches traditional dictionary search word pass searchInput
 //call function that fetches urban dictionary search word pass searchInput
+$("#search").on("click", function () {
+    var searchInput = document.querySelector("#word-input").value;
+    console.log(searchInput);
+    getUrban(searchInput);
+
+});
 
 //add event to view history button
 //call getLocal storage function
@@ -45,11 +81,15 @@ var audio = document.querySelector("#audio");
 
 var boringWord = function(word){
     word = "salty"
+
+// Capture the boring
+var boringWord = function (word) {
+    word = "fetch"
     var captureBoringUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
 
-    fetch(captureBoringUrl).then(function(response){
-        if(response.ok){
-            response.json().then(function(data){
+    fetch(captureBoringUrl).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (data) {
                 displayBoringWord(data);
             });
         }
@@ -61,7 +101,7 @@ var boringWord = function(word){
 };
 
 //Display boring word
-var displayBoringWord = function(word){
+var displayBoringWord = function (word) {
     console.log(word);
     
     //Display word
