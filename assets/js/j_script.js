@@ -1,4 +1,3 @@
-//declare variables 
 //array named history - get local storage function will set this variable
 //string named searchInput - for search input, set to empty string
 
@@ -15,6 +14,21 @@
 //JSON parse the local storage item array
 //set history array declared above to this parsed array from local storage
 
+//call getLocal storage function
+//push searchInput to the end of the history array delcared above
+//call set local storage function and pass history array to it
+//add event to view history button
+//call getLocal storage function
+//this event callback function will loop through history array and build out html for each word that has been searched in the past.
+
+
+//Function to capture search word
+$("#search").on("click", function () {
+    var searchInput = document.querySelector("#word-input").value;
+    console.log(searchInput);
+    getUrban(searchInput);
+    boringWord(searchInput);
+});
 
 function getUrban(searchInput) {
 
@@ -43,31 +57,9 @@ function getUrban(searchInput) {
 
         }
     })
-
 };
 
-//function getTraditional(input){}
-//create a function that takes in searchInput and fetches traditional dictionary search word
-//this function will set the html card for traditional dictionary to the return from fetch
-
-//add event to search button
-//set searchInput to user search input
-//call getLocal storage function
-//push searchInput to the end of the history array delcared above
-//call set local storage function and pass history array to it
-//call function that fetches traditional dictionary search word pass searchInput
-//call function that fetches urban dictionary search word pass searchInput
-$("#search").on("click", function () {
-    var searchInput = document.querySelector("#word-input").value;
-    console.log(searchInput);
-    getUrban(searchInput);
-    boringWord(searchInput);
-});
-
-//add event to view history button
-//call getLocal storage function
-//this event callback function will loop through history array and build out html for each word that has been searched in the past.
-
+//Boring dictionary variables
 var standardWord = document.querySelector("#standard-word");
 var definitions = document.querySelector("#standard-def");
 var alternativeDefs = document.querySelector("#alternative-defs");
@@ -83,7 +75,7 @@ var boringWord = function (word) {
             });
         }
         else {
-            alert("That is not a word in our dictionary");
+            $("#modal-warning-boring").modal();
         }
     });
 };
