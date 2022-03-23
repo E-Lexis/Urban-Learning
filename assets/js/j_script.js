@@ -1,6 +1,5 @@
 //array named history - get local storage function will set this variable
 //string named searchInput - for search input, set to empty string
-
 //call get local storage function to set history array above
 
 //function setLocal(arr){}
@@ -14,6 +13,18 @@
 //JSON parse the local storage item array
 //set history array declared above to this parsed array from local storage
 
+var searchHistory = (localStorage.searchHistory) ? JSON.parse(localStorage.searchHistory) : [];
+document.querySelector("#search").addEventListener("click", () => {
+    searchHistory.push(document.querySelector("#word-input").value);
+    localStorage.searchHistory = JSON.stringify(searchHistory);
+});
+document.querySelector("#word-input").addEventListener("focus", () => {
+    var data = document.querySelector("#searchdata");
+    searchHistory.forEach((search) => {
+        searchEl = document.createElement("option")
+        searchEl.value = JSON.stringify(searchHistory);
+    });
+  
 //call getLocal storage function
 //push searchInput to the end of the history array delcared above
 //call set local storage function and pass history array to it
@@ -28,6 +39,7 @@ $("#search").on("click", function () {
     console.log(searchInput);
     getUrban(searchInput);
     boringWord(searchInput);
+
 });
 
 function getUrban(searchInput) {
