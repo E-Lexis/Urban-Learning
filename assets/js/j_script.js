@@ -1,5 +1,3 @@
-
-//declare variables 
 //array named history - get local storage function will set this variable
 //string named searchInput - for search input, set to empty string
 //call get local storage function to set history array above
@@ -26,6 +24,22 @@ document.querySelector("#word-input").addEventListener("focus", () => {
         searchEl = document.createElement("option")
         searchEl.value = JSON.stringify(searchHistory);
     });
+  
+//call getLocal storage function
+//push searchInput to the end of the history array delcared above
+//call set local storage function and pass history array to it
+//add event to view history button
+//call getLocal storage function
+//this event callback function will loop through history array and build out html for each word that has been searched in the past.
+
+
+//Function to capture search word
+$("#search").on("click", function () {
+    var searchInput = document.querySelector("#word-input").value;
+    console.log(searchInput);
+    getUrban(searchInput);
+    boringWord(searchInput);
+
 });
 
 function getUrban(searchInput) {
@@ -55,54 +69,52 @@ function getUrban(searchInput) {
 
         }
     })
-
 };
 
-//function getTraditional(input){}
-//create a function that takes in searchInput and fetches traditional dictionary search word
-//this function will set the html card for traditional dictionary to the return from fetch
+//Boring dictionary variables
+var standardWord = document.querySelector("#standard-word");
+var definitions = document.querySelector("#standard-def");
+var alternativeDefs = document.querySelector("#alternative-defs");
 
-//add event to search button
-//set searchInput to user search input
-//call getLocal storage function
-//push searchInput to the end of the history array delcared above
-//call set local storage function and pass history array to it
-//call function that fetches traditional dictionary search word pass searchInput
-//call function that fetches urban dictionary search word pass searchInput
-$("#search").on("click", function () {
-    var searchInput = document.querySelector("#word-input").value;
-    console.log(searchInput);
-    getUrban(searchInput);
-    searchHistory.push(searchInput);
-
-});
-
-//add event to view history button
-//call getLocal storage function
-//this event callback function will loop through history array and build out html for each word that has been searched in the past.
-
-
-// Capture the boring
+// Capture the boring word
 var boringWord = function (word) {
-    word = "fetch"
     var captureBoringUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
 
     fetch(captureBoringUrl).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
-                displayBoringWord(data);
+                displayBoringWord(data, word);
             });
         }
         else {
-            alert("That is not a word in our dictionary");
+            $("#modal-warning-boring").modal();
         }
     });
-
 };
 
-var displayBoringWord = function (word) {
+//Display boring word
+var displayBoringWord = function (word, searchedWord) {
     console.log(word);
-}
+    
+    //Clear previously searched words
+    standardWord.textContent = "";
+    
+    //Display searched word
+    standardWord.textContent = "Word: " + searchedWord;
+    
+    //Display Top Definition
+    var topDefinition = word[0].meanings[0].definitions[0].definition;
+    definitions.textContent = "Top Definition: " + topDefinition;
 
-boringWord();
+    //Identify how many word meanings are in the array and display the alternatives
+    var meaningLength = word[0].meanings.length;
+    for(var i = 0; i < meaningLength; i++){             
+        var definitionLength = word[0].meanings[i].definitions.length;
+        for(var j = 1; j < definitionLength; j++){
+            var wordDefinition = document.createElement("li");
+            wordDefinition.textContent = word[0].meanings[i].definitions[j].definition;
+            alternativeDefs.appendChild(wordDefinition);
+        }
+    }
+}
 
