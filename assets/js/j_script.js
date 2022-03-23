@@ -16,9 +16,6 @@
 //set history array declared above to this parsed array from local storage
 
 
-
-
-
 function getUrban(searchInput) {
 
     var testURl = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" + searchInput;
@@ -64,80 +61,56 @@ $("#search").on("click", function () {
     var searchInput = document.querySelector("#word-input").value;
     console.log(searchInput);
     getUrban(searchInput);
-
+    boringWord(searchInput);
 });
 
 //add event to view history button
 //call getLocal storage function
 //this event callback function will loop through history array and build out html for each word that has been searched in the past.
 
-//Capture the boring 
-var results = document.querySelector("#results");
-var searchedWord = document.querySelector("#searchedWord");
-var defined = document.querySelector("#defined");
-var definitions = document.querySelector("#definitions");
-var part = document.querySelector("#part");
-var audio = document.querySelector("#audio");
+var standardWord = document.querySelector("#standard-word");
+var definitions = document.querySelector("#standard-def");
+var alternativeDefs = document.querySelector("#alternative-defs");
 
-var boringWord = function(word){
-    word = "salty"
-
-// Capture the boring
+// Capture the boring word
 var boringWord = function (word) {
-    word = "fetch"
     var captureBoringUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
 
     fetch(captureBoringUrl).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
-                displayBoringWord(data);
+                displayBoringWord(data, word);
             });
         }
         else {
             alert("That is not a word in our dictionary");
         }
     });
-
 };
 
 //Display boring word
-var displayBoringWord = function (word) {
+var displayBoringWord = function (word, searchedWord) {
     console.log(word);
     
-    //Display word
-    var wordWord = document.createElement("span");
-    wordWord.textContent = word[0].word;
-    searchedWord.appendChild(wordWord);
-
-    //Display Definitions
+    //Clear previously searched words
+    standardWord.textContent = "";
     
-    //Identify how many word meanings are in the array
+    //Display searched word
+    standardWord.textContent = "Word: " + searchedWord;
+    
+    //Display Top Definition
+    var topDefinition = word[0].meanings[0].definitions[0].definition;
+    definitions.textContent = "Top Definition: " + topDefinition;
+
+    //Identify how many word meanings are in the array and display the alternatives
     var meaningLength = word[0].meanings.length;
-    for(var i = 0; i < meaningLength; i++){
-        var partOfSpeech = document.createElement("div");
-        partOfSpeech.textContent = word[0].meanings[i].partOfSpeech;
-        part.appendChild(partOfSpeech);
-                
+    for(var i = 0; i < meaningLength; i++){             
         var definitionLength = word[0].meanings[i].definitions.length;
-        for(var j = 0; j < definitionLength; j++){
+        for(var j = 1; j < definitionLength; j++){
             var wordDefinition = document.createElement("li");
             wordDefinition.textContent = word[0].meanings[i].definitions[j].definition;
-            definitions.appendChild(wordDefinition);
+            alternativeDefs.appendChild(wordDefinition);
         }
     }
-    
-    //var playAudio = function(){
-       //var wordAudio = word[0].phonetics[0].audio;
-        //wordAudio.playAudio();
-        //var wordButton=document.createElement("button");
-
-        //wordButton = wordAudio;
-    //}
-
-    
-
-
 }
 
-//audio.addEventListener("click",playAudio());
-boringWord();
