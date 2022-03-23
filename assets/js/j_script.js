@@ -24,7 +24,8 @@ document.querySelector("#word-input").addEventListener("focus", () => {
         searchEl = document.createElement("option")
         searchEl.value = JSON.stringify(searchHistory);
     });
-  
+});
+
 //call getLocal storage function
 //push searchInput to the end of the history array delcared above
 //call set local storage function and pass history array to it
