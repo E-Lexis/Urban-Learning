@@ -64,9 +64,14 @@ function getUrban(searchInput) {
         if (response.list.length > 0) {
             document.getElementById("urban-word").innerText = "Word: " + response.list[0].word;
             document.getElementById("urban-def").innerText = "Top Definition: " + response.list[0].definition;
-            document.getElementById("urban-def2").innerText = "Alternative Definition: " + response.list[1].definition;
+            document.getElementById("urban-def2").innerText = "Alternative Definitions: " + response.list[1].definition;
+            document.getElementById("urban-def3").innerText = response.list[2].definition;
             return;
         }else{
+            $("#urban-word").empty();
+            $("#urban-def").empty();
+            $("#urban-def2").empty();
+            $("#urban-def3").empty();
             $("#modal-warning-urban").modal();
         }
     })
@@ -88,6 +93,9 @@ var boringWord = function (word) {
             });
         }
         else {
+            $("#standard-word").empty();
+            $("#standard-def").empty();
+            $("#alternative-defs").empty();
             $("#modal-warning-boring").modal();
         }
     });
@@ -111,6 +119,7 @@ var displayBoringWord = function (word, searchedWord) {
     var meaningLength = word[0].meanings.length;
     for(var i = 0; i < meaningLength; i++){             
         var definitionLength = word[0].meanings[i].definitions.length;
+        $("#alternative-defs").empty();
         for(var j = 1; j < definitionLength; j++){
             var wordDefinition = document.createElement("li");
             wordDefinition.textContent = word[0].meanings[i].definitions[j].definition;
