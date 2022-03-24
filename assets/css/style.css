@@ -1,5 +1,13 @@
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.form-input {
+    width: 400px;
+}
+
 .def-card {
-    height: 300px
+    padding: 10px
 }
 
 .def-row {
