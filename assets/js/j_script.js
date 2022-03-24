@@ -40,7 +40,6 @@ $("#search").on("click", function () {
     console.log(searchInput);
     getUrban(searchInput);
     boringWord(searchInput);
-
 });
 
 function getUrban(searchInput) {
@@ -62,12 +61,13 @@ function getUrban(searchInput) {
     $.ajax(settings).done(function (response) {
         console.log(response);
         //this function will set the html card for urban dictionary 
-        if (response) {
-            console.log("apiUrban", response.list);
+        if (response.list.length > 0) {
             document.getElementById("urban-word").innerText = "Word: " + response.list[0].word;
             document.getElementById("urban-def").innerText = "Top Definition: " + response.list[0].definition;
             document.getElementById("urban-def2").innerText = "Alternative Definition: " + response.list[1].definition;
-
+            return;
+        }else{
+            $("#modal-warning-urban").modal();
         }
     })
 };
