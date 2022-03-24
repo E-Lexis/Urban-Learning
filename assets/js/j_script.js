@@ -25,6 +25,7 @@ document.querySelector("#word-input").addEventListener("focus", () => {
         searchEl.value = JSON.stringify(searchHistory);
     });
 });
+  
 
 //call getLocal storage function
 //push searchInput to the end of the history array delcared above
@@ -36,6 +37,7 @@ document.querySelector("#word-input").addEventListener("focus", () => {
 
 //Function to capture search word
 $("#search").on("click", function () {
+    event.preventDefault();
     var searchInput = document.querySelector("#word-input").value;
     console.log(searchInput);
     getUrban(searchInput);
@@ -116,6 +118,8 @@ var displayBoringWord = function (word, searchedWord) {
     definitions.textContent = "Top Definition: " + topDefinition;
 
     //Identify how many word meanings are in the array and display the alternatives
+    alternativeDefs.textContent = "";
+
     var meaningLength = word[0].meanings.length;
     for(var i = 0; i < meaningLength; i++){             
         var definitionLength = word[0].meanings[i].definitions.length;
@@ -126,5 +130,5 @@ var displayBoringWord = function (word, searchedWord) {
             alternativeDefs.appendChild(wordDefinition);
         }
     }
-}
+};
 
