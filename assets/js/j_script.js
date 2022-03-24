@@ -37,6 +37,7 @@ document.querySelector("#word-input").addEventListener("focus", () => {
 
 //Function to capture search word
 $("#search").on("click", function () {
+    event.preventDefault();
     var searchInput = document.querySelector("#word-input").value;
     console.log(searchInput);
     getUrban(searchInput);
