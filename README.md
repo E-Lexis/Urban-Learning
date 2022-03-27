@@ -17,4 +17,4 @@ Application is interactive (accepts and responds to suer input).
 
 Live URL: https://e-lexis.github.io/Urban-Learning/
 
-![urban-learning screenshot2](https://user-images.githubusercontent.com/96886608/159846474-5ac4bda5-b4bb-4fdb-84b3-efbdd130e1dd.png)
+![_C__Users_jolso_Desktop_projects_Urban-Learning_index html_ (1)](https://user-images.githubusercontent.com/96886608/160296858-b26e51f4-2b2b-4e95-861d-0ec25e4b4bda.png)
