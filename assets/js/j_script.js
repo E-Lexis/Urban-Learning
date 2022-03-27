@@ -101,6 +101,7 @@ var boringWord = function (word) {
             });
         }
         else {
+            console.log("helloworld");
             $("#standard-word").empty();
             $("#standard-def").empty();
             $("#alternative-defs").empty();
