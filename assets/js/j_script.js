@@ -36,6 +36,7 @@ document.querySelector("#word-input").addEventListener("focus", () => {
 
 
 //Function to capture search word
+// jquery onclick event handler to capture input from user & calls two API functions 
 $("#search").on("click", function () {
     event.preventDefault();
     var searchInput = document.querySelector("#word-input").value;
@@ -44,10 +45,13 @@ $("#search").on("click", function () {
     boringWord(searchInput);
 });
 
+// function takes in search term from user
 function getUrban(searchInput) {
 
+    // concatonates end point for urban API w/user search term, stores it in variable testURL
     var testURl = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" + searchInput;
 
+    // then formatted the object for ajax call by setting URL, method, and headers
     const settings = {
         "async": true,
         "crossDomain": true,
@@ -60,15 +64,17 @@ function getUrban(searchInput) {
         }
     };
 
+    // used ajax to make a git request to urban api
     $.ajax(settings).done(function (response) {
         console.log(response);
-        //this function will set the html card for urban dictionary 
+        //if the response has a list of defs it writes it to the html
         if (response.list.length > 0) {
             document.getElementById("urban-word").innerText = "Word: " + response.list[0].word;
             document.getElementById("urban-def").innerText = "Top Definition: " + response.list[0].definition;
             document.getElementById("urban-def2").innerText = "Alternative Definitions: " + response.list[1].definition;
             document.getElementById("urban-def3").innerText = response.list[2].definition;
             return;
+            // if it doesn't have defs, it clears the card & displays modal
         }else{
             $("#urban-word").empty();
             $("#urban-def").empty();
@@ -95,6 +101,7 @@ var boringWord = function (word) {
             });
         }
         else {
+            console.log("helloworld");
             $("#standard-word").empty();
             $("#standard-def").empty();
             $("#alternative-defs").empty();
