@@ -13,19 +13,23 @@
 //JSON parse the local storage item array
 //set history array declared above to this parsed array from local storage
 
+
 var searchHistory = (localStorage.searchHistory) ? JSON.parse(localStorage.searchHistory) : [];
 document.querySelector("#search").addEventListener("click", () => {
     searchHistory.push(document.querySelector("#word-input").value);
     localStorage.searchHistory = JSON.stringify(searchHistory);
 });
-document.querySelector("#word-input").addEventListener("focus", () => {
-    var data = document.querySelector("#searchdata");
-    searchHistory.forEach((search) => {
-        searchEl = document.createElement("option")
-        searchEl.value = JSON.stringify(searchHistory);
-    });
+
+var data = document.querySelector("#search-data");
+searchHistory.forEach((search) => {
+    searchEl = document.createElement("option")
+    searchEl.value = search;
+    data.appendChild(searchEl);
 });
-  
+
+document.querySelector("#word-input").addEventListener("focus", () => {
+    appendChild(data);
+});
 
 //call getLocal storage function
 //push searchInput to the end of the history array delcared above
@@ -40,7 +44,6 @@ document.querySelector("#word-input").addEventListener("focus", () => {
 $("#search").on("click", function () {
     event.preventDefault();
     var searchInput = document.querySelector("#word-input").value;
-    console.log(searchInput);
     getUrban(searchInput);
     boringWord(searchInput);
 });
@@ -66,7 +69,6 @@ function getUrban(searchInput) {
 
     // used ajax to make a git request to urban api
     $.ajax(settings).done(function (response) {
-        console.log(response);
         //if the response has a list of defs it writes it to the html
         if (response.list.length > 0) {
             document.getElementById("urban-word").innerText = "Word: " + response.list[0].word;
@@ -101,7 +103,6 @@ var boringWord = function (word) {
             });
         }
         else {
-            console.log("helloworld");
             $("#standard-word").empty();
             $("#standard-def").empty();
             $("#alternative-defs").empty();
@@ -112,8 +113,6 @@ var boringWord = function (word) {
 
 //Display boring word
 var displayBoringWord = function (word, searchedWord) {
-    console.log(word);
-    
     //Clear previously searched words
     standardWord.textContent = "";
     

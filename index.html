@@ -47,10 +47,12 @@
             </div>
         </div>
         <!-- Search input bar -->
-        <form class="d-flex">
-            <input id="word-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" autocomplete="off">
+            <input list="search-data" id="word-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <datalist id="search-data"></datalist>
             <button id="search" class="btn btn-outline-light" type="submit">Search</button>
         </form>
+        
     </section>
 
     <!-- Search Results -->
